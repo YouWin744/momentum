@@ -70,9 +70,15 @@ public class MilestoneWidgetProvider extends AppWidgetProvider {
 
         views.setViewVisibility(R.id.milestone_widget_content, View.VISIBLE);
         views.setViewVisibility(R.id.milestone_widget_empty, View.GONE);
-        views.setTextViewText(R.id.milestone_widget_title, formatTitle(occurrence));
+        views.setTextViewText(R.id.milestone_widget_title, occurrence.name);
         views.setTextViewText(R.id.milestone_widget_date, formatDate(occurrence.nextDate));
         views.setTextViewText(R.id.milestone_widget_countdown, formatCountdown(occurrence.nextDate));
+        if (occurrence.anniversary > 0) {
+            views.setViewVisibility(R.id.milestone_widget_anniversary, View.VISIBLE);
+            views.setTextViewText(R.id.milestone_widget_anniversary, formatAnniversary(occurrence.anniversary));
+        } else {
+            views.setViewVisibility(R.id.milestone_widget_anniversary, View.GONE);
+        }
         return views;
     }
 
@@ -119,11 +125,8 @@ public class MilestoneWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    private static String formatTitle(MilestoneOccurrence occurrence) {
-        if (occurrence.anniversary <= 0) {
-            return occurrence.name;
-        }
-        return occurrence.name + " · " + formatOrdinal(occurrence.anniversary);
+    private static String formatAnniversary(int anniversary) {
+        return formatOrdinal(anniversary) + " anniversary";
     }
 
     private static String formatDate(Calendar date) {
