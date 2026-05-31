@@ -13,7 +13,8 @@ import {
   cancelTaskNotification,
   syncAllNotifications,
 } from './src/services/NotificationService';
-import { syncWidgetTasks } from './src/services/WidgetService';
+import { syncWidgetMilestones, syncWidgetTasks } from './src/services/WidgetService';
+import { MilestoneService } from './src/services/MilestoneService';
 
 const INITIAL_HEALTH = 60; // 1 hour
 
@@ -42,8 +43,10 @@ const App: React.FC = () => {
     const init = async () => {
       const tasksData = await api.fetchTasks();
       const completedData = await api.fetchCompletedTasks();
+      const milestonesData = await MilestoneService.getAllMilestones();
       setTasks(tasksData);
       setCompletedTasks(completedData);
+      await syncWidgetMilestones(milestonesData);
 
       // 初始化通知系统并同步所有任务通知
       await initNotifications();

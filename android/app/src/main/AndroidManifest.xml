@@ -36,6 +36,7 @@
 
         <receiver
             android:name=".PendingTasksWidgetProvider"
+            android:label="@string/momentum_tasks_widget_name"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -51,6 +52,18 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".MilestoneWidgetProvider"
+            android:label="@string/milestone_widget_name"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/milestone_widget_info" />
         </receiver>
 
         <service

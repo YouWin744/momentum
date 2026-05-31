@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MilestoneModal, { MilestoneFormData } from '../components/MilestoneModal';
 import { Milestone } from '../types';
 import { getNextOccurrence, MilestoneService } from '../src/services/MilestoneService';
+import { syncWidgetMilestones } from '../src/services/WidgetService';
 
 const MilestonesPage: React.FC = () => {
   const [milestones, setMilestones] = useState<Milestone[]>([]);
@@ -9,7 +10,9 @@ const MilestonesPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const loadMilestones = async () => {
-    setMilestones(await MilestoneService.getAllMilestones());
+    const loadedMilestones = await MilestoneService.getAllMilestones();
+    setMilestones(loadedMilestones);
+    await syncWidgetMilestones(loadedMilestones);
   };
 
   useEffect(() => {

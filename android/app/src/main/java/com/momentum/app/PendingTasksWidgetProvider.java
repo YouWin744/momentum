@@ -31,7 +31,7 @@ public class PendingTasksWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onDisabled(Context context) {
-        PendingTasksWidgetRefreshReceiver.cancelRefresh(context);
+        PendingTasksWidgetRefreshReceiver.scheduleNextRefresh(context);
     }
 
     public static void updateAllWidgets(Context context) {

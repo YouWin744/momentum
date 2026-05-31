@@ -5,6 +5,7 @@
     <string name="package_name">com.momentum.app</string>
     <string name="custom_url_scheme">com.momentum.app</string>
     <string name="momentum_widget_description">Open Momentum from the home screen</string>
+    <string name="momentum_tasks_widget_name">Momentum Tasks</string>
     <string name="momentum_widget_empty">No pending tasks</string>
     <string name="momentum_widget_icon_description">Momentum app icon</string>
     <string name="momentum_widget_open_description">Open Momentum</string>
@@ -15,6 +16,10 @@
     <string name="momentum_widget_group_tomorrow">明天</string>
     <string name="momentum_widget_group_later">之后</string>
     <string name="momentum_widget_date_format">M月d日 HH:mm</string>
+    <string name="milestone_widget_description">Show the nearest milestone</string>
+    <string name="milestone_widget_name">Momentum Milestone</string>
+    <string name="milestone_widget_empty">No milestones</string>
+    <string name="milestone_widget_empty_hint">Open Momentum to add one</string>
     <plurals name="momentum_widget_task_count">
         <item quantity="one">%d pending task</item>
         <item quantity="other">%d pending tasks</item>

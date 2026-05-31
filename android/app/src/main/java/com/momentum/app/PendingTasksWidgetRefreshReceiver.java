@@ -14,16 +14,17 @@ public class PendingTasksWidgetRefreshReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (!PendingTasksWidgetProvider.hasWidgets(context)) {
+        if (!hasWidgets(context)) {
             cancelRefresh(context);
             return;
         }
 
         PendingTasksWidgetProvider.updateAllWidgets(context);
+        MilestoneWidgetProvider.updateAllWidgets(context);
     }
 
     public static void scheduleNextRefresh(Context context) {
-        if (!PendingTasksWidgetProvider.hasWidgets(context)) {
+        if (!hasWidgets(context)) {
             cancelRefresh(context);
             return;
         }
@@ -60,5 +61,9 @@ public class PendingTasksWidgetRefreshReceiver extends BroadcastReceiver {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
+    }
+
+    private static boolean hasWidgets(Context context) {
+        return PendingTasksWidgetProvider.hasWidgets(context) || MilestoneWidgetProvider.hasWidgets(context);
     }
 }

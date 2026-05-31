@@ -1,8 +1,9 @@
 import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
-import { Task } from '../../types';
+import { Milestone, Task } from '../../types';
 
 const WIDGET_TASKS_KEY = 'momentum_widget_tasks';
+const WIDGET_MILESTONES_KEY = 'momentum_widget_milestones';
 
 interface WidgetTask {
   name: string;
@@ -35,5 +36,14 @@ export async function syncWidgetTasks(tasks: Task[]): Promise<void> {
   await Preferences.set({
     key: WIDGET_TASKS_KEY,
     value: JSON.stringify(widgetTasks),
+  });
+}
+
+export async function syncWidgetMilestones(milestones: Milestone[]): Promise<void> {
+  if (!Capacitor.isNativePlatform()) return;
+
+  await Preferences.set({
+    key: WIDGET_MILESTONES_KEY,
+    value: JSON.stringify(milestones),
   });
 }
