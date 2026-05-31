@@ -1,0 +1,5 @@
+{
+  "name": "Life Health Todo",
+  "description": "A unique todo list assistant where tasks have 'health' that fluctuates based on your focus status. Manage short-term and long-term goals with a dynamic health system.",
+  "requestFramePermissions": []
+}
