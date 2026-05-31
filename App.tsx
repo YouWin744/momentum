@@ -83,8 +83,8 @@ const App: React.FC = () => {
       description: data.description || '',
       targetTime: data.targetTime || new Date().toISOString(),
       status: 'positive',
-      health: INITIAL_HEALTH,
       maxHealth: data.maxHealth || 180,
+      health: Math.min(INITIAL_HEALTH, data.maxHealth || 180),
       type: data.type || (activeView === 'short' ? 'short-term' : 'long-term'),
       createdAt: Date.now(),
     };

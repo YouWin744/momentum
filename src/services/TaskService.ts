@@ -16,6 +16,9 @@ const calculateHealth = (task: Task): { newHealth: number, lastSyncTime: number 
         newHealth = Math.max(0, task.health - (diffMinutes * 2));
     }
 
+    // Safety cap: health should never exceed maxHealth
+    newHealth = Math.min(newHealth, task.maxHealth);
+
     return { newHealth, lastSyncTime: now };
 };
 

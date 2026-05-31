@@ -27,16 +27,19 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, onSave, onDelete, onClose, 
     e.preventDefault();
     if (!name.trim()) return;
 
+    const maxHealth = Math.max(1, maxHealthHrs * 60);
     const data = {
       name,
       description,
       targetTime: new Date(targetTime).toISOString(),
       type,
-      maxHealth: Math.max(1, maxHealthHrs * 60)
+      maxHealth,
     };
 
     if (task) {
-      onSave({ ...task, ...data });
+      // Cap health at maxHealth when maxHealth is reduced
+      const health = Math.min(task.health, maxHealth);
+      onSave({ ...task, ...data, health });
     } else {
       onSave(data);
     }
