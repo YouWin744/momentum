@@ -19,14 +19,14 @@ const getTaskCategory = (targetTime: string) => {
   const dayAfterTomorrow = new Date(today);
   dayAfterTomorrow.setDate(today.getDate() + 2);
 
-  if (target < today) return '已过期';
-  if (target < tomorrow) return '当天';
-  if (target < dayAfterTomorrow) return '明天';
-  return '之后';
+  if (target < today) return 'Overdue';
+  if (target < tomorrow) return 'Today';
+  if (target < dayAfterTomorrow) return 'Tomorrow';
+  return 'Later';
 };
 
 const ShortTermPage: React.FC<ShortTermPageProps> = ({ tasks, onToggleStatus, onComplete, onEdit }) => {
-  const categories = ['已过期', '当天', '明天', '之后'];
+  const categories = ['Overdue', 'Today', 'Tomorrow', 'Later'];
   const grouped = [...tasks]
     .sort((a, b) => new Date(a.targetTime).getTime() - new Date(b.targetTime).getTime())
     .reduce((acc, task) => {
@@ -52,7 +52,7 @@ const ShortTermPage: React.FC<ShortTermPageProps> = ({ tasks, onToggleStatus, on
         <div className="space-y-5">
           {categories.map(cat => grouped[cat] && grouped[cat].length > 0 && (
             <div key={cat} className="space-y-2.5">
-              <h2 className={`text-xs font-black uppercase tracking-widest px-1 flex items-center gap-3 ${cat === '已过期' ? 'text-health-red' : 'text-white'}`}>
+              <h2 className="text-xs font-black uppercase tracking-widest px-1 flex items-center gap-3 text-white">
                 {cat}
                 <div className="h-px flex-1 bg-white/20"></div>
               </h2>

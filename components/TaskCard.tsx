@@ -30,9 +30,9 @@ const formatTargetTime = (timeStr: string) => {
   const date = new Date(timeStr);
   const cat = getTaskCategory(timeStr);
   if (cat === 'Today') {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
   }
-  return date.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+  return date.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
 };
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleStatus, onComplete, onCompleteOnce, onCompleteFinal, onEdit }) => {
@@ -65,9 +65,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleStatus, onComplete, o
   return (
     <div className="glass-card p-3.5 rounded-[20px] shadow-sm flex flex-col gap-1 active:scale-[0.99] transition-all hover:shadow-md cursor-pointer border-l-4 border-l-primary/40 group" onClick={() => onEdit(task)}>
       <div className="flex items-center gap-2">
-        <div className="flex-grow">
-          <div className="flex justify-between items-start">
-            <h3 className="font-bold text-slate-900 dark:text-white text-lg leading-tight group-hover:text-primary transition-colors">
+        <div className="flex-grow min-w-0">
+          <div className="flex justify-between items-start min-w-0">
+            <h3 className="truncate font-bold text-slate-900 dark:text-white text-lg leading-tight group-hover:text-primary transition-colors">
               {task.name}
             </h3>
             <span className={`text-[10px] font-bold uppercase tracking-wide ${getTaskCategory(task.targetTime) === 'Overdue' ||
@@ -78,7 +78,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleStatus, onComplete, o
               Target: {formatTargetTime(task.targetTime)}
             </span>
           </div>
-          <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-1 mt-1">
+          <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mt-1">
             {task.description || "No description provided."}
           </p>
         </div>

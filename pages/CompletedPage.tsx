@@ -13,10 +13,10 @@ const CompletedPage: React.FC<CompletedPageProps> = ({ completedTasks, onRestore
 
   const categories = ['expired', 'today', 'tomorrow', 'future'];
   const categoryLabels: Record<string, string> = {
-    'expired': '已过期',
-    'today': '当天',
-    'tomorrow': '明天',
-    'future': '之后'
+    'expired': 'Overdue',
+    'today': 'Today',
+    'tomorrow': 'Tomorrow',
+    'future': 'Later'
   };
 
   const sortByNewest = (tasks: CompletedTask[]) => [...tasks].sort((a, b) => b.completedAt - a.completedAt);
@@ -64,7 +64,7 @@ const CompletedPage: React.FC<CompletedPageProps> = ({ completedTasks, onRestore
       ) : (
         categories.map((cat) => groupedTasks[cat] && groupedTasks[cat].length > 0 && (
           <section key={cat} className="space-y-4">
-            <h2 className={`text-xs font-black uppercase tracking-widest px-1 flex items-center gap-3 ${cat === 'expired' ? 'text-health-red' : 'text-white'}`}>
+            <h2 className="text-xs font-black uppercase tracking-widest px-1 flex items-center gap-3 text-white">
               {categoryLabels[cat]}
               <div className="h-px flex-1 bg-white/20"></div>
             </h2>

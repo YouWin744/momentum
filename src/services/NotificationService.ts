@@ -19,8 +19,8 @@ export async function initNotifications(): Promise<boolean> {
     // Android/iOS：创建通知渠道 + 请求权限
     await LocalNotifications.createChannel({
         id: CHANNEL_ID,
-        name: '任务提醒',
-        description: '当任务到达目标时间时发送提醒',
+        name: 'Task Reminder',
+        description: 'Sent when a task reaches its target time',
         importance: 5,
         visibility: 1,
         vibration: true,
@@ -64,7 +64,7 @@ export async function scheduleTaskNotification(task: Task): Promise<void> {
                 notifications: [
                     {
                         title: `⏰ ${task.name}`,
-                        body: task.description || '任务时间到了！',
+                        body: task.description || "Time's up!",
                         id: notifId,
                         channelId: CHANNEL_ID,
                         smallIcon: 'ic_launcher_foreground',
@@ -91,7 +91,7 @@ export async function scheduleTaskNotification(task: Task): Promise<void> {
         setTimeout(() => {
             if (Notification.permission !== 'granted') return;
             new Notification(`⏰ ${task.name}`, {
-                body: task.description || '任务时间到了！',
+                body: task.description || "Time's up!",
                 tag: `task-${task.id}`,
             });
         }, delay);
