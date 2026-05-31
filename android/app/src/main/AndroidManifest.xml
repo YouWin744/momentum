@@ -45,6 +45,14 @@
                 android:resource="@xml/momentum_widget_info" />
         </receiver>
 
+        <receiver
+            android:name=".PendingTasksWidgetRefreshReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".PendingTasksWidgetService"
             android:exported="false"

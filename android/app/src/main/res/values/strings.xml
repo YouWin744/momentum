@@ -11,7 +11,7 @@
     <string name="momentum_widget_title">Momentum</string>
     <string name="momentum_widget_untitled_task">Untitled task</string>
     <string name="momentum_widget_group_overdue">已过期</string>
-    <string name="momentum_widget_group_current">当前</string>
+    <string name="momentum_widget_group_current">当天</string>
     <string name="momentum_widget_group_tomorrow">明天</string>
     <string name="momentum_widget_group_later">之后</string>
     <string name="momentum_widget_date_format">M月d日 HH:mm</string>

@@ -21,6 +21,17 @@ public class PendingTasksWidgetProvider extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(appWidgetId, buildViews(context, appWidgetId));
         }
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.momentum_widget_list);
+        PendingTasksWidgetRefreshReceiver.scheduleNextRefresh(context);
+    }
+
+    @Override
+    public void onEnabled(Context context) {
+        PendingTasksWidgetRefreshReceiver.scheduleNextRefresh(context);
+    }
+
+    @Override
+    public void onDisabled(Context context) {
+        PendingTasksWidgetRefreshReceiver.cancelRefresh(context);
     }
 
     public static void updateAllWidgets(Context context) {
@@ -31,6 +42,13 @@ public class PendingTasksWidgetProvider extends AppWidgetProvider {
             manager.updateAppWidget(appWidgetId, buildViews(context, appWidgetId));
         }
         manager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.momentum_widget_list);
+        PendingTasksWidgetRefreshReceiver.scheduleNextRefresh(context);
+    }
+
+    public static boolean hasWidgets(Context context) {
+        AppWidgetManager manager = AppWidgetManager.getInstance(context);
+        ComponentName componentName = new ComponentName(context, PendingTasksWidgetProvider.class);
+        return manager.getAppWidgetIds(componentName).length > 0;
     }
 
     private static RemoteViews buildViews(Context context, int appWidgetId) {

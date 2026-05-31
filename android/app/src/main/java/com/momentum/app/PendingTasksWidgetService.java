@@ -76,15 +76,22 @@ public class PendingTasksWidgetService extends RemoteViewsService {
             views.setTextViewText(R.id.momentum_widget_task_name, name);
             views.setTextViewText(R.id.momentum_widget_task_metadata, formatMetadata(row.task));
 
-            // Health bar
-            int health = row.task.optInt("health", 60);
+            // Calculate the current health value from elapsed time.
             int maxHealth = row.task.optInt("maxHealth", 180);
-            int healthPercent = maxHealth > 0 ? (health * 100) / maxHealth : 0;
-            views.setTextViewText(R.id.momentum_widget_task_health, formatHealth(health));
+            int currentHealth = calculateCurrentHealth(row.task);
+            int healthPercent = maxHealth > 0 ? (currentHealth * 100) / maxHealth : 0;
+            views.setTextViewText(R.id.momentum_widget_task_health, formatHealth(currentHealth));
             views.setInt(R.id.momentum_widget_task_health_bar, "setProgress", healthPercent);
-            if (health <= 0) {
+            if (currentHealth <= 0) {
                 views.setTextColor(R.id.momentum_widget_task_health, Color.rgb(239, 68, 68));
             }
+
+            // Use green for positive status and red for negative status.
+            String status = row.task.optString("status", "positive");
+            int dotColor = "positive".equals(status)
+                ? Color.rgb(76, 175, 80)
+                : Color.rgb(239, 68, 68);
+            views.setTextColor(R.id.momentum_widget_task_status_dot, dotColor);
             return views;
         }
 
@@ -210,6 +217,31 @@ public class PendingTasksWidgetService extends RemoteViewsService {
             } catch (ParseException ignored) {
                 return null;
             }
+        }
+
+        /**
+         * Calculate the current health based on elapsed time since lastSyncTime,
+         * mirroring the logic in TaskService.calculateHealth.
+         */
+        private int calculateCurrentHealth(JSONObject task) {
+            int storedHealth = task.optInt("health", 60);
+            int maxHealth = task.optInt("maxHealth", 180);
+            long lastSync = task.optLong("lastSyncTime", task.optLong("createdAt", 0));
+            String status = task.optString("status", "positive");
+
+            if (lastSync <= 0) return storedHealth;
+
+            long now = System.currentTimeMillis();
+            long diffMinutes = (now - lastSync) / 60000;
+            if (diffMinutes <= 0) return storedHealth;
+
+            int newHealth;
+            if ("positive".equals(status)) {
+                newHealth = Math.min(maxHealth, storedHealth + (int) diffMinutes);
+            } else {
+                newHealth = Math.max(0, storedHealth - (int) (diffMinutes * 2));
+            }
+            return newHealth;
         }
     }
 

@@ -9,10 +9,10 @@
 
     <LinearLayout
         android:id="@+id/momentum_widget_title_action"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:clickable="true"
-        android:gravity="center_vertical">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -22,21 +22,21 @@
             android:textColor="#FF2E7D32"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/momentum_widget_count"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:textColor="#FF64748B"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="5dp"
+            android:background="#664CAF50" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/momentum_widget_count"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:textColor="#FF64748B"
-        android:textSize="11sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="3dp"
-        android:background="#664CAF50" />
 
     <ListView
         android:id="@+id/momentum_widget_list"
