@@ -3,6 +3,7 @@ import { Task, CompletedTask, ViewType, TaskStatus, TaskType, GroupedCompletedTa
 import BottomNav from './components/BottomNav';
 import ShortTermPage from './pages/ShortTermPage';
 import LongTermPage from './pages/LongTermPage';
+import MilestonesPage from './pages/MilestonesPage';
 import CompletedPage from './pages/CompletedPage';
 import TaskModal from './components/TaskModal';
 import { api } from './api';
@@ -255,11 +256,12 @@ const App: React.FC = () => {
             onDeletePermanent={deleteCompletedTaskPermanent}
           />
         )}
+        {activeView === 'milestones' && <MilestonesPage />}
       </main>
 
       <BottomNav activeView={activeView} onViewChange={setActiveView} />
 
-      {activeView !== 'completed' && (
+      {(activeView === 'short' || activeView === 'long') && (
         <button
           onClick={openCreateModal}
           className="fixed bottom-28 right-6 w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center shadow-2xl active:scale-90 transition-transform z-30"

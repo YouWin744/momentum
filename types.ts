@@ -22,7 +22,7 @@ export interface CompletedTask extends Task {
 }
 
 
-export type ViewType = 'short' | 'long' | 'completed';
+export type ViewType = 'short' | 'long' | 'milestones' | 'completed';
 
 export interface GroupedCompletedTasks {
   expired: CompletedTask[];
