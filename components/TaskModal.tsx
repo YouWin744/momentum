@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Task, TaskType } from '../types';
 
 interface TaskModalProps {
@@ -22,6 +22,13 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, onSave, onDelete, onClose, 
   const [targetTime, setTargetTime] = useState(task?.targetTime ? getLocalDatetimeString(new Date(task.targetTime)) : getLocalDatetimeString(new Date()));
   const type = task?.type || defaultType; // Task type is now locked
   const [maxHealthHrs, setMaxHealthHrs] = useState((task?.maxHealth || 180) / 60);
+
+  // Lock body scroll while modal is open
+  useEffect(() => {
+    const original = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = original; };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,9 +62,6 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, onSave, onDelete, onClose, 
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
 
       <div className="relative w-full max-w-lg bg-white/95 dark:bg-slate-900/95 glass-effect rounded-t-[2.5rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[92vh] transition-transform animate-in slide-in-from-bottom-full duration-300">
-        <div className="flex flex-col items-center pt-3 pb-1 sm:hidden">
-          <div className="h-1.5 w-12 rounded-full bg-slate-300 dark:bg-slate-700" />
-        </div>
 
         <div className="px-6 pt-6 pb-2 flex justify-between items-center">
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
@@ -68,7 +72,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, onSave, onDelete, onClose, 
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-6 py-4 space-y-5">
+        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-6 py-4 space-y-5" style={{ overscrollBehavior: 'contain' }}>
           <div className="space-y-2">
             <label className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider ml-1">Task Name</label>
             <input
