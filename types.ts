@@ -21,6 +21,13 @@ export interface CompletedTask extends Task {
   isHistoryRecord: boolean; // True if it's a "single check" from a long-term task
 }
 
+export interface Milestone {
+  id: string;
+  name: string;
+  description: string;
+  date: string; // YYYY-MM-DD
+  createdAt: number;
+}
 
 export type ViewType = 'short' | 'long' | 'milestones' | 'completed';
 

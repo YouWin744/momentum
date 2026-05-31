@@ -217,7 +217,7 @@ const App: React.FC = () => {
   const longTermTasks = useMemo(() => tasks.filter(t => t.type === 'long-term'), [tasks]);
 
   return (
-    <div className="relative min-h-screen">
+    <div className="fixed inset-0 overflow-hidden">
       <div className="fixed inset-0 z-0">
         <img
           src={activeView === 'short'
@@ -231,7 +231,7 @@ const App: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40"></div>
       </div>
 
-      <main className="relative p-5 pb-32 max-w-2xl mx-auto">
+      <main className="relative h-full overflow-y-auto overscroll-contain p-5 pb-32 max-w-2xl mx-auto">
         {activeView === 'short' && (
           <ShortTermPage
             tasks={shortTermTasks}
