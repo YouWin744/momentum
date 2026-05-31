@@ -75,6 +75,16 @@ public class PendingTasksWidgetService extends RemoteViewsService {
             String name = row.name.isEmpty() ? context.getString(R.string.momentum_widget_untitled_task) : row.name;
             views.setTextViewText(R.id.momentum_widget_task_name, name);
             views.setTextViewText(R.id.momentum_widget_task_metadata, formatMetadata(row.task));
+
+            // Health bar
+            int health = row.task.optInt("health", 60);
+            int maxHealth = row.task.optInt("maxHealth", 180);
+            int healthPercent = maxHealth > 0 ? (health * 100) / maxHealth : 0;
+            views.setTextViewText(R.id.momentum_widget_task_health, formatHealth(health));
+            views.setInt(R.id.momentum_widget_task_health_bar, "setProgress", healthPercent);
+            if (health <= 0) {
+                views.setTextColor(R.id.momentum_widget_task_health, Color.rgb(239, 68, 68));
+            }
             return views;
         }
 
@@ -169,6 +179,12 @@ public class PendingTasksWidgetService extends RemoteViewsService {
             calendar.set(Calendar.MILLISECOND, 0);
             calendar.add(Calendar.DAY_OF_MONTH, offsetDays);
             return calendar;
+        }
+
+        private String formatHealth(int mins) {
+            int h = mins / 60;
+            int m = mins % 60;
+            return h + "h " + m + "m";
         }
 
         private String formatMetadata(JSONObject task) {

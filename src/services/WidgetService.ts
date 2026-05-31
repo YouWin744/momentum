@@ -8,6 +8,8 @@ interface WidgetTask {
   name: string;
   targetTime: string;
   type: Task['type'];
+  health: number;
+  maxHealth: number;
 }
 
 export async function syncWidgetTasks(tasks: Task[]): Promise<void> {
@@ -15,7 +17,7 @@ export async function syncWidgetTasks(tasks: Task[]): Promise<void> {
 
   const widgetTasks: WidgetTask[] = [...tasks]
     .sort((a, b) => new Date(a.targetTime).getTime() - new Date(b.targetTime).getTime())
-    .map(({ name, targetTime, type }) => ({ name, targetTime, type }));
+    .map(({ name, targetTime, type, health, maxHealth }) => ({ name, targetTime, type, health, maxHealth }));
 
   await Preferences.set({
     key: WIDGET_TASKS_KEY,

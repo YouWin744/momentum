@@ -1,28 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="44dp"
-    android:gravity="center_vertical"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:paddingBottom="6dp">
 
-    <TextView
-        android:id="@+id/momentum_widget_task_name"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="22dp"
-        android:ellipsize="end"
+        android:layout_height="wrap_content"
+        android:background="@drawable/momentum_widget_task_background"
         android:gravity="center_vertical"
-        android:maxLines="1"
-        android:textColor="#FF1E293B"
-        android:textSize="13sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/momentum_widget_task_metadata"
-        android:layout_width="match_parent"
-        android:layout_height="18dp"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:maxLines="1"
-        android:textColor="#FF64748B"
-        android:textSize="11sp" />
-</LinearLayout>
+        <!-- Task info (left) -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/momentum_widget_task_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#FF1E293B"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/momentum_widget_task_metadata"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#FF64748B"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <!-- Health (right) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:minWidth="52dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/momentum_widget_task_health"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#FF2E7D32"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/momentum_widget_task_health_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="52dp"
+                android:layout_height="4dp"
+                android:layout_marginTop="3dp"
+                android:max="100"
+                android:progressDrawable="@drawable/momentum_widget_health_progress" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
