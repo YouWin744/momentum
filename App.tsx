@@ -12,6 +12,7 @@ import {
   cancelTaskNotification,
   syncAllNotifications,
 } from './src/services/NotificationService';
+import { syncWidgetTasks } from './src/services/WidgetService';
 
 const INITIAL_HEALTH = 60; // 1 hour
 
@@ -70,6 +71,10 @@ const App: React.FC = () => {
     }, 60000); // Ticks every minute
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    syncWidgetTasks(tasks).catch(err => console.error('Failed to sync widget tasks:', err));
+  }, [tasks]);
 
   const handleCreateTask = async (data: Partial<Task>) => {
     const newTask: Task = {

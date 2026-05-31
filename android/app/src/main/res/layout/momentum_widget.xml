@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/momentum_widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF7B1FA2"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:text="@string/momentum_widget_title"
+        android:textColor="#FFFFFFFF"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/momentum_widget_count"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="#D9FFFFFF"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/momentum_widget_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="42dp"
+        android:text="@string/momentum_widget_empty"
+        android:textColor="#E6FFFFFF"
+        android:textSize="14sp" />
+
+    <TextView android:id="@+id/momentum_widget_row_1" android:layout_width="match_parent" android:layout_height="25dp" android:ellipsize="end" android:gravity="center_vertical" android:maxLines="1" android:textColor="#FFFFFFFF" android:textSize="12sp" />
+    <TextView android:id="@+id/momentum_widget_row_2" android:layout_width="match_parent" android:layout_height="25dp" android:ellipsize="end" android:gravity="center_vertical" android:maxLines="1" android:textColor="#FFFFFFFF" android:textSize="12sp" />
+    <TextView android:id="@+id/momentum_widget_row_3" android:layout_width="match_parent" android:layout_height="25dp" android:ellipsize="end" android:gravity="center_vertical" android:maxLines="1" android:textColor="#FFFFFFFF" android:textSize="12sp" />
+    <TextView android:id="@+id/momentum_widget_row_4" android:layout_width="match_parent" android:layout_height="25dp" android:ellipsize="end" android:gravity="center_vertical" android:maxLines="1" android:textColor="#FFFFFFFF" android:textSize="12sp" />
+    <TextView android:id="@+id/momentum_widget_row_5" android:layout_width="match_parent" android:layout_height="25dp" android:ellipsize="end" android:gravity="center_vertical" android:maxLines="1" android:textColor="#FFFFFFFF" android:textSize="12sp" />
+    <TextView android:id="@+id/momentum_widget_row_6" android:layout_width="match_parent" android:layout_height="25dp" android:ellipsize="end" android:gravity="center_vertical" android:maxLines="1" android:textColor="#FFFFFFFF" android:textSize="12sp" />
+    <TextView android:id="@+id/momentum_widget_row_7" android:layout_width="match_parent" android:layout_height="25dp" android:ellipsize="end" android:gravity="center_vertical" android:maxLines="1" android:textColor="#FFFFFFFF" android:textSize="12sp" />
+    <TextView android:id="@+id/momentum_widget_row_8" android:layout_width="match_parent" android:layout_height="25dp" android:ellipsize="end" android:gravity="center_vertical" android:maxLines="1" android:textColor="#FFFFFFFF" android:textSize="12sp" />
+</LinearLayout>

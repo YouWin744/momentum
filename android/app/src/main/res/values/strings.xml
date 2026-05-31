@@ -4,4 +4,14 @@
     <string name="title_activity_main">Momentum</string>
     <string name="package_name">com.momentum.app</string>
     <string name="custom_url_scheme">com.momentum.app</string>
+    <string name="momentum_widget_description">Open Momentum from the home screen</string>
+    <string name="momentum_widget_empty">No pending tasks</string>
+    <string name="momentum_widget_icon_description">Momentum app icon</string>
+    <string name="momentum_widget_open_description">Open Momentum</string>
+    <string name="momentum_widget_title">Momentum Tasks</string>
+    <string name="momentum_widget_untitled_task">Untitled task</string>
+    <plurals name="momentum_widget_task_count">
+        <item quantity="one">%d pending task</item>
+        <item quantity="other">%d pending tasks</item>
+    </plurals>
 </resources>
