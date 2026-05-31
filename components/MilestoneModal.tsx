@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Milestone } from '../types';
+import ModalShell from './ModalShell';
 
 export interface MilestoneFormData {
   name: string;
@@ -109,13 +110,6 @@ const MilestoneModal: React.FC<MilestoneModalProps> = ({ milestone, onSave, onDe
   const days = Array.from({ length: getDaysInMonth(year, month) }, (_, index) => index + 1);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, []);
-
-  useEffect(() => {
     const lastDay = getDaysInMonth(year, month);
     if (day > lastDay) {
       setDay(lastDay);
@@ -137,102 +131,51 @@ const MilestoneModal: React.FC<MilestoneModalProps> = ({ milestone, onSave, onDe
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/60 backdrop-blur-sm sm:items-center">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-lg rounded-t-[2.5rem] border border-white/20 bg-white/95 p-6 shadow-2xl dark:bg-slate-900/95 sm:rounded-[2.5rem]"
-      >
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-primary">Important Date</p>
-            <h2 className="mt-1 text-2xl font-black text-slate-900 dark:text-white">
-              {milestone ? 'Edit Milestone' : 'New Milestone'}
-            </h2>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300"
-            aria-label="Close"
-          >
-            <span className="material-symbols-outlined">close</span>
-          </button>
+    <ModalShell
+      title={milestone ? 'Edit Milestone' : 'New Milestone'}
+      onClose={onClose}
+      onSubmit={handleSubmit}
+      onDelete={handleDelete}
+      showDelete={!!milestone}
+      saveIcon="event_available"
+      saveLabel={milestone ? 'Update Milestone' : 'Save Milestone'}
+    >
+      <label className="block">
+        <span className="mb-1.5 block text-xs font-black uppercase tracking-wider text-slate-500">Milestone Name</span>
+        <input
+          required
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+          placeholder="What would you like to remember?"
+          className="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-800/70 dark:text-white"
+        />
+      </label>
+
+      <label className="block">
+        <span className="mb-1.5 block text-xs font-black uppercase tracking-wider text-slate-500">Description</span>
+        <textarea
+          value={description}
+          onChange={(event) => setDescription(event.target.value)}
+          placeholder="Add a note about this date"
+          rows={3}
+          className="w-full resize-none rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-800/70 dark:text-white"
+        />
+      </label>
+
+      <fieldset>
+        <legend className="mb-1.5 block text-xs font-black uppercase tracking-wider text-slate-500">Original Date</legend>
+        <div className="grid grid-cols-[1.35fr_1fr_1fr] gap-2">
+          <CompactPicker label="Year" value={year} options={years} onChange={setYear} />
+          <CompactPicker label="Month" value={month} options={months} onChange={setMonth} />
+          <CompactPicker label="Day" value={day} options={days} onChange={setDay} />
         </div>
-
-        <div className="space-y-4">
-          <label className="block">
-            <span className="mb-1.5 block text-xs font-black uppercase tracking-wider text-slate-500">Milestone Name</span>
-            <input
-              required
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              placeholder="What would you like to remember?"
-              className="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-800/70 dark:text-white"
-            />
-          </label>
-
-          <label className="block">
-            <span className="mb-1.5 block text-xs font-black uppercase tracking-wider text-slate-500">Description</span>
-            <textarea
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-              placeholder="Add a note about this date"
-              rows={3}
-              className="w-full resize-none rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-800/70 dark:text-white"
-            />
-          </label>
-
-          <fieldset>
-            <legend className="mb-1.5 block text-xs font-black uppercase tracking-wider text-slate-500">Original Date</legend>
-            <div className="grid grid-cols-[1.35fr_1fr_1fr] gap-2">
-              <CompactPicker
-                label="Year"
-                value={year}
-                options={years}
-                onChange={setYear}
-              />
-              <CompactPicker
-                label="Month"
-                value={month}
-                options={months}
-                onChange={setMonth}
-              />
-              <CompactPicker
-                label="Day"
-                value={day}
-                options={days}
-                onChange={setDay}
-              />
-            </div>
-            <div className="mt-1.5 grid grid-cols-[1.35fr_1fr_1fr] gap-2 px-1 text-center text-[10px] font-black uppercase tracking-wider text-slate-400">
-              <span>Year</span>
-              <span>Month</span>
-              <span>Day</span>
-            </div>
-          </fieldset>
+        <div className="mt-1.5 grid grid-cols-[1.35fr_1fr_1fr] gap-2 px-1 text-center text-[10px] font-black uppercase tracking-wider text-slate-400">
+          <span>Year</span>
+          <span>Month</span>
+          <span>Day</span>
         </div>
-
-        <div className="mt-6 flex gap-3">
-          {milestone && (
-            <button
-              type="button"
-              onClick={handleDelete}
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-red-50 text-red-500 transition-colors hover:bg-red-100 dark:bg-red-950/30"
-              aria-label="Delete milestone"
-            >
-              <span className="material-symbols-outlined">delete</span>
-            </button>
-          )}
-          <button
-            type="submit"
-            className="flex h-12 flex-1 items-center justify-center gap-2 rounded-2xl bg-primary font-black text-white shadow-lg shadow-primary/20 transition-transform active:scale-[0.98]"
-          >
-            <span className="material-symbols-outlined">event_available</span>
-            {milestone ? 'Update Milestone' : 'Save Milestone'}
-          </button>
-        </div>
-      </form>
-    </div>
+      </fieldset>
+    </ModalShell>
   );
 };
 
