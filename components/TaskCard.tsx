@@ -63,9 +63,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleStatus, onComplete, o
   };
 
   return (
-    <div className="glass-card p-3.5 rounded-[20px] shadow-sm flex flex-col gap-1 active:scale-[0.99] transition-all hover:shadow-md cursor-pointer border-l-4 border-l-primary/40 group">
+    <div className="glass-card p-3.5 rounded-[20px] shadow-sm flex flex-col gap-1 active:scale-[0.99] transition-all hover:shadow-md cursor-pointer border-l-4 border-l-primary/40 group" onClick={() => onEdit(task)}>
       <div className="flex items-center gap-2">
-        <div className="flex-grow" onClick={() => onEdit(task)}>
+        <div className="flex-grow">
           <div className="flex justify-between items-start">
             <h3 className="font-bold text-slate-900 dark:text-white text-lg leading-tight group-hover:text-primary transition-colors">
               {task.name}
