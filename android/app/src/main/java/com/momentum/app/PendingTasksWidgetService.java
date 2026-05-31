@@ -201,7 +201,7 @@ public class PendingTasksWidgetService extends RemoteViewsService {
                 return type;
             }
             String pattern = context.getString(R.string.momentum_widget_date_format);
-            String formattedTime = new SimpleDateFormat(pattern, Locale.CHINA).format(date);
+            String formattedTime = new SimpleDateFormat(pattern, Locale.US).format(date);
             return type + "  |  " + formattedTime;
         }
 
