@@ -80,7 +80,7 @@ export const TaskService = {
 
     getCompletedTasks: async (): Promise<GroupedCompletedTasks> => {
         try {
-            const tasks = await db.completedTasks.orderBy('completedAt').reverse().toArray();
+            const tasks = await db.completedTasks.orderBy('targetTime').reverse().toArray();
 
             const now = new Date();
             const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();

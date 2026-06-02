@@ -11,7 +11,7 @@ interface CompletedPageProps {
 const CompletedPage: React.FC<CompletedPageProps> = ({ completedTasks, onRestore, onDeletePermanent }) => {
   const [selectedTask, setSelectedTask] = useState<CompletedTask | null>(null);
 
-  const categories = ['expired', 'today', 'tomorrow', 'future'];
+  const categories = ['future', 'tomorrow', 'today', 'expired'];
   const categoryLabels: Record<string, string> = {
     'expired': 'Overdue',
     'today': 'Today',
@@ -19,12 +19,15 @@ const CompletedPage: React.FC<CompletedPageProps> = ({ completedTasks, onRestore
     'future': 'Later'
   };
 
-  const sortByNewest = (tasks: CompletedTask[]) => [...tasks].sort((a, b) => b.completedAt - a.completedAt);
+  const sortByTargetTimeDescending = (tasks: CompletedTask[]) => [...tasks].sort((a, b) => (
+    new Date(b.targetTime).getTime() - new Date(a.targetTime).getTime()
+    || b.completedAt - a.completedAt
+  ));
   const groupedTasks = useMemo<GroupedCompletedTasks>(() => ({
-    expired: sortByNewest(completedTasks.expired),
-    today: sortByNewest(completedTasks.today),
-    tomorrow: sortByNewest(completedTasks.tomorrow),
-    future: sortByNewest(completedTasks.future),
+    expired: sortByTargetTimeDescending(completedTasks.expired),
+    today: sortByTargetTimeDescending(completedTasks.today),
+    tomorrow: sortByTargetTimeDescending(completedTasks.tomorrow),
+    future: sortByTargetTimeDescending(completedTasks.future),
   }), [completedTasks]);
 
   const handleDeletePermanent = (id: string) => {
