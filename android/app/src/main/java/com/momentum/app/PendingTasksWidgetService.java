@@ -74,7 +74,13 @@ public class PendingTasksWidgetService extends RemoteViewsService {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.momentum_widget_task);
             String name = row.name.isEmpty() ? context.getString(R.string.momentum_widget_untitled_task) : row.name;
             views.setTextViewText(R.id.momentum_widget_task_name, name);
-            views.setTextViewText(R.id.momentum_widget_task_metadata, formatMetadata(row.task));
+            views.setTextViewText(R.id.momentum_widget_task_metadata, formatTaskType(row.task));
+            views.setTextViewText(R.id.momentum_widget_task_target_time, formatTargetTime(row.task));
+            long targetTimestamp = getTimestamp(row.task.optString("targetTime"));
+            int targetTimeColor = targetTimestamp != Long.MAX_VALUE && targetTimestamp < System.currentTimeMillis()
+                ? Color.rgb(239, 68, 68)
+                : Color.rgb(100, 116, 139);
+            views.setTextColor(R.id.momentum_widget_task_target_time, targetTimeColor);
 
             // Calculate the current health value from elapsed time.
             int maxHealth = row.task.optInt("maxHealth", 180);
@@ -194,15 +200,17 @@ public class PendingTasksWidgetService extends RemoteViewsService {
             return h + "h " + m + "m";
         }
 
-        private String formatMetadata(JSONObject task) {
-            String type = "long-term".equals(task.optString("type")) ? "LONG" : "SHORT";
+        private String formatTaskType(JSONObject task) {
+            return "long-term".equals(task.optString("type")) ? "LONG" : "SHORT";
+        }
+
+        private String formatTargetTime(JSONObject task) {
             Date date = parseIsoDate(task.optString("targetTime"));
             if (date == null) {
-                return type;
+                return "";
             }
             String pattern = context.getString(R.string.momentum_widget_date_format);
-            String formattedTime = new SimpleDateFormat(pattern, Locale.US).format(date);
-            return type + "  |  " + formattedTime;
+            return new SimpleDateFormat(pattern, Locale.US).format(date);
         }
 
         private long getTimestamp(String value) {
