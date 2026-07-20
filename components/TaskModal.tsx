@@ -21,6 +21,9 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, onSave, onDelete, onClose, 
   const [name, setName] = useState(task?.name || '');
   const [description, setDescription] = useState(task?.description || '');
   const [targetTime, setTargetTime] = useState(task?.targetTime ? getLocalDatetimeString(new Date(task.targetTime)) : getLocalDatetimeString(new Date()));
+  const selectedWeekday = targetTime
+    ? new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(new Date(targetTime))
+    : '';
   const type = task?.type || defaultType; // Task type is now locked
   const [maxHealthHrs, setMaxHealthHrs] = useState((task?.maxHealth || 180) / 60);
 
@@ -76,6 +79,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, onSave, onDelete, onClose, 
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          rows={6}
           className="w-full resize-none rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-800/70 dark:text-white"
           placeholder="Add some details..."
         />
@@ -89,6 +93,11 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, onSave, onDelete, onClose, 
           onChange={(e) => setTargetTime(e.target.value)}
           className="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-800/70 dark:text-white"
         />
+        {selectedWeekday && (
+          <p className="px-1 text-xs font-bold text-slate-500 dark:text-slate-400">
+            {selectedWeekday}
+          </p>
+        )}
       </div>
 
       <div className="grid grid-cols-2 gap-4">

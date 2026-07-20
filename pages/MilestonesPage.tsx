@@ -114,7 +114,10 @@ const MilestonesPage: React.FC = () => {
                       {milestone.description}
                     </p>
                   )}
-                  <p className="mt-2 text-xs font-black tracking-wide text-slate-700 dark:text-slate-300">
+                  <p
+                    className="mt-2 overflow-hidden text-ellipsis text-[11px] font-black text-slate-700 dark:text-slate-300"
+                    style={{ whiteSpace: 'nowrap' }}
+                  >
                     {formatDate(nextOccurrence.date)} · {formatAnniversary(nextOccurrence.anniversary)}
                   </p>
                 </div>

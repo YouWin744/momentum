@@ -28,11 +28,16 @@ const getTaskCategory = (targetTime: string) => {
 
 const formatTargetTime = (timeStr: string) => {
   const date = new Date(timeStr);
-  const cat = getTaskCategory(timeStr);
-  if (cat === 'Today') {
-    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const time = `${hours}:${minutes}`;
+
+  if (getTaskCategory(timeStr) === 'Today') {
+    return time;
   }
-  return date.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+
+  const dateLabel = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  return `${dateLabel}, ${time}`;
 };
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleStatus, onComplete, onCompleteOnce, onCompleteFinal, onEdit }) => {
@@ -63,22 +68,20 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleStatus, onComplete, o
   };
 
   return (
-    <div className="glass-card p-3.5 rounded-[20px] shadow-sm flex flex-col gap-1 active:scale-[0.99] transition-all hover:shadow-md cursor-pointer border-l-4 border-l-primary/40 group" onClick={() => onEdit(task)}>
-      <div className="flex items-center gap-2">
-        <div className="flex-grow min-w-0">
-          <div className="flex justify-between items-start min-w-0">
-            <h3 className="truncate font-bold text-slate-900 dark:text-white text-lg leading-tight group-hover:text-primary transition-colors">
-              {task.name}
-            </h3>
-            <span className={`text-[10px] font-bold uppercase tracking-wide ${getTaskCategory(task.targetTime) === 'Overdue' ||
-                (getTaskCategory(task.targetTime) === 'Today' && new Date(task.targetTime) < new Date())
-                ? 'text-health-red'
-                : 'text-slate-500'
-              }`}>
-              Target: {formatTargetTime(task.targetTime)}
-            </span>
-          </div>
-          <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mt-1">
+    <div className="glass-card px-3.5 pb-2 pt-2 rounded-[20px] shadow-sm flex flex-col gap-0 active:scale-[0.99] transition-all hover:shadow-md cursor-pointer border-l-4 border-l-primary/40 group" onClick={() => onEdit(task)}>
+      <div className="flex items-start gap-2">
+        <div className="min-w-0 flex-grow">
+          <h3 className="mt-3.5 truncate text-lg font-bold leading-tight text-slate-900 transition-colors group-hover:text-primary dark:text-white">
+            {task.name}
+          </h3>
+          <p className={`mt-1 truncate whitespace-nowrap text-[10px] font-bold uppercase tracking-wide ${getTaskCategory(task.targetTime) === 'Overdue' ||
+              (getTaskCategory(task.targetTime) === 'Today' && new Date(task.targetTime) < new Date())
+              ? 'text-health-red'
+              : 'text-slate-500'
+            }`}>
+            Target: {formatTargetTime(task.targetTime)}
+          </p>
+          <p className="mt-1 line-clamp-2 text-xs text-slate-600 dark:text-slate-400">
             {task.description || "No description provided."}
           </p>
         </div>
@@ -118,7 +121,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleStatus, onComplete, o
         </div>
       </div>
 
-      <div className="flex items-center gap-3 mt-0.5">
+      <div className="mt-0 flex items-center gap-3">
         <div className="flex-grow h-1.5 bg-slate-200/50 dark:bg-slate-800/50 rounded-full overflow-hidden">
           <div
             className={`h-full transition-all duration-500 ${isHealthEmpty ? 'bg-health-red' : 'bg-health-green'}`}

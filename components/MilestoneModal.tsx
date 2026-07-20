@@ -157,7 +157,7 @@ const MilestoneModal: React.FC<MilestoneModalProps> = ({ milestone, onSave, onDe
           value={description}
           onChange={(event) => setDescription(event.target.value)}
           placeholder="Add a note about this date"
-          rows={3}
+          rows={6}
           className="w-full resize-none rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-900 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-800/70 dark:text-white"
         />
       </label>
